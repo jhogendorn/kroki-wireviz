@@ -15,14 +15,12 @@ build:
 		--build-arg POETRY_VERSION=$$(bin/get-tool-version poetry) \
 		-f Dockerfile \
 		.
-buildv:
-	docker build \
-		-t $(image):$(tag) \
-		--build-arg PYTHON_VERSION=$$(bin/get-tool-version python) \
-		--build-arg POETRY_VERSION=$$(bin/get-tool-version poetry) \
-		-f Dockerfile \
-		--progress plain \
-		.
+run:
+	docker run -p8010:8010 --network host kroki-wireviz:latest
+demo-svg:
+	curl http://localhost:8010/svg -X POST --data-binary "@tests/input_example1.yaml"
+demo-png:
+	curl http://localhost:8010/png -X POST --data-binary "@tests/input_example1.yaml" --output -
 tool-version:
 	grep $(TOOL) .tool-versions | cut -d' ' -f2-
 test:
