@@ -23,5 +23,15 @@ demo-png:
 	curl http://localhost:8010/png -X POST --data-binary "@tests/input_example1.yaml" --output -
 tool-version:
 	grep $(TOOL) .tool-versions | cut -d' ' -f2-
-test:
+test-container:
 	container-structure-test test --image $(image):$(tag) --config spec/*.yml
+test:
+	poetry run task test
+dev-run:
+	poetry run task dev
+dev-install:
+	poetry install
+pylint:
+	poetry run task lint
+format:
+	poetry run task format
