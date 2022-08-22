@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+BASEPATH=$( cd $SCRIPTPATH/../; pwd -P )
+GROOT=$(git rev-parse --show-toplevel)
+
+while IFS= read -r line; do
+  NAME="$(echo $line | cut -d' ' -f1 )"
+  VALUE=$(echo $line | cut -d' ' -f2-)
+  if [[ $NAME == "$1" ]]; then
+    echo $VALUE
+  fi
+done < $GROOT/.tool-versions
+

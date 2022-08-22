@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "kroki_wireviz"
+version = "0.1.0"
+description = "RESTful bridge for Kroki to support WireViz diagrams"
+authors = ["Joshua Hogendorn <jhogendorn@gmail.com>"]
+packages = [
+    { include = "kroki_wireviz" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Flask-RESTful = "^0.3.9"
+wireviz = "^0.3.2"
+graphviz = "^0.20.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7"
+taskipy = "^1.10.2"
+black = "^22.6.0"
+pylint = "^2.14.5"
+pyright = "^1.1.267"
+validate-pyproject = "^0.9"
+requests = "^2.28.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.pyright]
+include = ["."]
+executionEnvironments = [
+  { root = "tests", extraPaths = ["."] }
+]
+
+[tool.taskipy.tasks]
+test = "pytest tests/test_*.py"
+lint = "pylint kroki_wireviz tests"
+format = "black kroki_wireviz tests"
+dev = "python kroki_wireviz/api.py"
